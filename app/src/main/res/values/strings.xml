@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Lost and Found App</string>
+    <string name="label_description">Description:</string>
+    <string name="btn_remove">Remove Item</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_phone">Phone Number</string>
+    <string name="hint_desc">Short Description</string>
+    <string name="hint_date">Date (e.g., 15/05/2024)</string>
+    <string name="hint_location">Location</string>
+    <string name="img_desc">Item Image</string>
+</resources>
