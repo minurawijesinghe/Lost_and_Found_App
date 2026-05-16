@@ -8,4 +8,6 @@
     <string name="hint_date">Date (e.g., 15/05/2024)</string>
     <string name="hint_location">Location</string>
     <string name="img_desc">Item Image</string>
+    <string name="label_radius">Radius:</string>
+    <string name="btn_apply">Apply</string>
 </resources>

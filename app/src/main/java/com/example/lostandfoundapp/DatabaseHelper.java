@@ -6,13 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "lost_and_found.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2; // Incremented version
 
     public static final String TABLE_NAME = "adverts";
     public static final String COLUMN_ID = "id";
@@ -25,6 +22,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LOCATION = "location";
     public static final String COLUMN_IMAGE_URI = "imageUri";
     public static final String COLUMN_TIMESTAMP = "timestamp";
+    public static final String COLUMN_LATITUDE = "latitude"; // New column
+    public static final String COLUMN_LONGITUDE = "longitude"; // New column
 
     private static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NAME + " (" +
@@ -37,7 +36,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_DATE + " TEXT, " +
                     COLUMN_LOCATION + " TEXT, " +
                     COLUMN_IMAGE_URI + " TEXT, " +
-                    COLUMN_TIMESTAMP + " TEXT);";
+                    COLUMN_TIMESTAMP + " TEXT, " +
+                    COLUMN_LATITUDE + " REAL, " +
+                    COLUMN_LONGITUDE + " REAL);";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -50,12 +51,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-        onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_LATITUDE + " REAL DEFAULT 0.0");
+            db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_LONGITUDE + " REAL DEFAULT 0.0");
+        }
     }
 
     public long insertAdvert(String postType, String name, String phone, String description,
-                            String category, String date, String location, String imageUri, String timestamp) {
+                            String category, String date, String location, String imageUri, 
+                            String timestamp, double latitude, double longitude) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_POST_TYPE, postType);
@@ -67,6 +71,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_LOCATION, location);
         values.put(COLUMN_IMAGE_URI, imageUri);
         values.put(COLUMN_TIMESTAMP, timestamp);
+        values.put(COLUMN_LATITUDE, latitude);
+        values.put(COLUMN_LONGITUDE, longitude);
 
         long id = db.insert(TABLE_NAME, null, values);
         db.close();

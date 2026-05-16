@@ -69,7 +69,7 @@ public class ListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+            getOnBackPressedDispatcher().onBackPressed();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -86,7 +86,7 @@ public class ListActivity extends AppCompatActivity {
         advertList.clear();
         Cursor cursor = dbHelper.getAdvertsByCategory(category);
 
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID));
                 String type = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_POST_TYPE));
@@ -98,11 +98,15 @@ public class ListActivity extends AppCompatActivity {
                 String loc = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_LOCATION));
                 String uri = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_IMAGE_URI));
                 String ts = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_TIMESTAMP));
+                
+                // Get lat/lng to match the new Advert constructor
+                double lat = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_LATITUDE));
+                double lng = cursor.getDouble(cursor.getColumnIndexOrThrow(DatabaseHelper.COLUMN_LONGITUDE));
 
-                advertList.add(new Advert(id, type, name, phone, desc, cat, date, loc, uri, ts));
+                advertList.add(new Advert(id, type, name, phone, desc, cat, date, loc, uri, ts, lat, lng));
             } while (cursor.moveToNext());
+            cursor.close();
         }
-        cursor.close();
         adapter.notifyDataSetChanged();
     }
 }

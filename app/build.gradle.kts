@@ -4,11 +4,7 @@ plugins {
 
 android {
     namespace = "com.example.lostandfoundapp"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.lostandfoundapp"
@@ -40,6 +36,12 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    
+    // Use version catalog references for Google Services
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+    implementation(libs.places)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

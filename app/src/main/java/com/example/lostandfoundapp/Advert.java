@@ -11,8 +11,10 @@ public class Advert {
     private String location;
     private String imageUri;
     private String timestamp;
+    private double latitude;
+    private double longitude;
 
-    public Advert(int id, String postType, String name, String phone, String description, String category, String date, String location, String imageUri, String timestamp) {
+    public Advert(int id, String postType, String name, String phone, String description, String category, String date, String location, String imageUri, String timestamp, double latitude, double longitude) {
         this.id = id;
         this.postType = postType;
         this.name = name;
@@ -23,6 +25,8 @@ public class Advert {
         this.location = location;
         this.imageUri = imageUri;
         this.timestamp = timestamp;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public int getId() { return id; }
@@ -35,4 +39,6 @@ public class Advert {
     public String getLocation() { return location; }
     public String getImageUri() { return imageUri; }
     public String getTimestamp() { return timestamp; }
+    public double getLatitude() { return latitude; }
+    public double getLongitude() { return longitude; }
 }

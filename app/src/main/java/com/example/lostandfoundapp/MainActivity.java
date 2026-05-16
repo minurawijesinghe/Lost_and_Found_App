@@ -16,11 +16,11 @@ public class MainActivity extends AppCompatActivity {
 
         Button btnCreateAdvert = findViewById(R.id.btnCreateAdvert);
         Button btnShowItems = findViewById(R.id.btnShowItems);
+        Button btnShowOnMap = findViewById(R.id.btnShowOnMap);
 
         btnCreateAdvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to Create Advert Screen
                 Intent intent = new Intent(MainActivity.this, CreateAdvertActivity.class);
                 startActivity(intent);
             }
@@ -29,8 +29,15 @@ public class MainActivity extends AppCompatActivity {
         btnShowItems.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to List Screen
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnShowOnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(intent);
             }
         });
